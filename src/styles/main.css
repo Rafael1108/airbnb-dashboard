@@ -44,9 +44,6 @@ main {
    border-radius: 0.8rem;
 }
 
-svg {
-  width: 100%; 
-}
 
 table {
   width: 100%;
@@ -63,3 +60,29 @@ table th {
   background-color: #f4f4f4;
 }
 
+.bar {
+      transition: all 0.3s ease;
+    }
+    .bar:hover {
+      opacity: 0.8;
+    }
+    .type-label {
+      fill: #333;
+    }
+    .count-label {
+      font-weight: bold;
+    }
+
+    #wa-heatmaps-container {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.heat-point {
+  transition: r 0.2s ease, opacity 0.2s ease;
+}
+
+.city-label {
+  font-weight: bold;
+  text-shadow: 1px 1px 2px white;
+}
