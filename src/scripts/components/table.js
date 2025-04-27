@@ -1,15 +1,12 @@
 // Function to render the table
 export function renderNeighborhoodTable(processedData) {
   const { roomTypes, tableData } = processedData;
-
+const tbl = d3.select("#table-container");
   // Clean up the previous table
-  d3.select("#table-container").html("");
+  tbl.html("");
 
   // Create table structure
-  const table = d3
-    .select("#table-container")
-    .append("table")
-    .attr("class", "neighborhood-table");
+  const table = tbl.append("table").attr("class", "neighborhood-table");
 
   // Create header row
   const thead = table.append("thead");

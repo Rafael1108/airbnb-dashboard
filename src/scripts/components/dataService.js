@@ -7,14 +7,19 @@ import { onRenderBoxMonthCard } from "./boxMonthCard.js";
 import { renderRoomTypeHeatmaps } from "./map.js";
 
 // Function to load data from CSV file and process it
-export function onLoadData() {
+export function onLoadData(params) {
   d3.csv("assets/data/australian.csv")
-    .then(function (data) {
+    .then(function (dt) {
+      onMonthNeighborhoodData(dt);
+      onMonthData(dt, params);
+      let data = dt;
+      if (params.months && !params.months.includes(-1)) {
+        data = dt.filter((d) => params.months.includes(+d.month_number));
+      }
+      // Process and render the data
       onRoomTypeFrecuencyData(data);
       onNeighbourhoodData(data);
-      onMonthData(data);
-      onMonthNeighborhoodData(data);
-      onRoomTypeHeatmaps(data); 
+      onRoomTypeHeatmaps(data);
     })
     .catch(function (error) {
       //  Handle error
@@ -98,7 +103,7 @@ export function onNeighbourhoodData(data) {
 }
 
 // Function to process and render the data for month statistics
-export function onMonthData(data) {
+export function onMonthData(data,params) {
   const groupedData = d3.rollup(
     data,
     (v) => v.length, // frecuency count
@@ -115,7 +120,39 @@ export function onMonthData(data) {
     };
   }).sort((a, b) => a.month_number - b.month_number);
 
+  // add month select options
+  const select = d3.select("#monthSelect");
+
+  select
+    .selectAll("option")
+    .data(sortedData)
+    .enter()
+    .append("option")
+    .attr("value", (d) => d.month_number)
+    .attr("selected", true)
+    .text((d) => `${d.month} - 2024`);
+
+  select.on("change", function () {
+    const selectedOptions = Array.from(this.selectedOptions).map(
+      (option) => +option.value
+    );
+
+    onLoadData({
+      months: selectedOptions,
+    });
+  });
+
   onRenderBoxMonthCard(sortedData);
+
+  // Filter out months with no data
+  if (params.months && !params.months.includes(-1)) {
+    const notIncluded = sortedData.filter(
+      (d) => !params.months.includes(d.month_number)
+    ); 
+    notIncluded.forEach((monthData) => {  
+      d3.select(`#box-row-${monthData.month_number}`).classed("disabled", true);  
+    });
+  }
 }
 
 // Function to process and render the data for month neighborhood statistics
@@ -128,18 +165,38 @@ export function onMonthNeighborhoodData(data) {
     (d) => +d.month_number // group by month number
   );
 
-  const sortedData = Array.from(groupedData, ([month, monthData]) => {
-    const [month_number, count] = monthData.entries().next().value;
-    return {
-      month,
-      month_number,
-      count,
-    };
-  }).sort((a, b) => a.month_number - b.month_number);
   renderMonthNeighborhoodLineChart(data, groupedData);
 }
 
 // Function to render the box month card
 export function onRoomTypeHeatmaps(data) {
   renderRoomTypeHeatmaps(data);
+}
+
+
+export function downloadCSV( ) {
+  d3.csv("assets/data/australian.csv")
+    .then(function (data) {
+
+  const csv = d3.csvFormat(data);
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const link = document.createElement("a");
+
+  const url = URL.createObjectURL(blob);
+  link.setAttribute("href", url);
+  link.setAttribute("download", "Data_WesternAustralia2024.csv");
+  link.style.visibility = "hidden";
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+    })
+    .catch(function (error) {
+      //  Handle error
+      console.error("Error al cargar el archivo:", error);
+    });
+
+
+
 }

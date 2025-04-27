@@ -1,20 +1,6 @@
 // Function to create the heatmaps for room types in Australia
 // This function takes the data and renders heatmaps using D3.js
-export function renderRoomTypeHeatmaps(data) {
-  d3.select("body")
-    .append("div")
-    .attr("id", "heatmap-tooltip")
-    .style("position", "absolute")
-    .style("padding", "8px")
-    .style("background", "rgba(255, 255, 255, 0.9)")
-    .style("border", "1px solid #ddd")
-    .style("border-radius", "4px")
-    .style("pointer-events", "none")
-    .style("opacity", 0)
-    .style("z-index", "10")
-    .style("font-size", "12px")
-    .style("max-width", "200px");
-
+export function renderRoomTypeHeatmaps(data) { 
   const validData = data.filter(
     (d) =>
       d.latitude &&
@@ -41,7 +27,9 @@ export function renderRoomTypeHeatmaps(data) {
 
   // Create a container for the heatmaps
   const container = d3
-    .select("#wa-heatmaps-container")
+    .select("#wa-heatmaps-container");
+  container.html(""); // Clear previous content
+  container
     .style("display", "grid")
     .style("grid-template-columns", "repeat(2, 1fr)")
     .style("gap", "20px");
@@ -54,7 +42,7 @@ export function renderRoomTypeHeatmaps(data) {
         const priceExtent = d3.extent(roomData, (d) => +d.price); 
         const colorScale = d3
           .scaleSequential(d3.interpolateWarm)
-          .domain([priceExtent[0], priceExtent[1]]); 
+          .domain([20, 10000]); 
         const roomContainer = container
           .append("div")
           .style("position", "relative")
@@ -86,7 +74,8 @@ export function renderRoomTypeHeatmaps(data) {
           .attr("d", path)
           .attr("fill", "#e8f4f8")
           .attr("stroke", "#4682B4")
-          .attr("stroke-width", 1);
+          .attr("stroke-width", 1)
+          ;
 
         // Crear el mapa de calor
         const heatPoints = svg
@@ -226,5 +215,5 @@ legend
     .append("p")
     .attr("class", "text-xs text-secondary") 
     .style("font-size", "12px")
-    .text(`$ ${extent[0]} - $ ${extent[1]}`);
+    .text(`$ ${20} - $ ${10000}`);
 }

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Airbnb - Western Australia" />
+    <meta name="keywords" content="airbnb, dashboard, dataview" />
+    <meta http-equiv="refresh" content="2; url=src/">
+    
+    <!--Icon link  -->
+    <link rel="icon" href="src/assets/img/logo.svg" /> 
+    <!-- Title  -->
+    <title>Actividad 1 UNIR - Análisis de tendencias</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f5f5f5;
+        }
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Máster en Análisis y Visualización de Datos Masivos</h1>
+    <h2>Actividad 1: Análisis de tendencias en D3.js</h2>
+    
+    <div class="loader"></div>
+    <p>Cargando la visualización...</p>
+    
+    <script>
+        setTimeout(function() {
+            window.location.href = "src/";
+        }, 2000);
+    </script>
+</body>
+</html>
