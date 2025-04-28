@@ -9,7 +9,7 @@ import { onLoadData, downloadCSV } from "./components/dataService.js";
 // Constants for layout
 const ROW_COUNT = 6;
 
-//
+// Array of authors
 const authors = [
   {
     name: "Bastidas Toledo, Carlos R",

@@ -1,3 +1,7 @@
+/* This is the main CSS file for the web application
+    It contains styles for the header, footer, main content area,
+    and various components used throughout the application. */
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -43,7 +47,7 @@ main {
 .card {
   border-radius: 0.8rem;
 }
-
+/* Card styles */
 .card.disabled {
   opacity: 0.4;
   filter: grayscale(100%);
@@ -51,6 +55,7 @@ main {
   transition: all 0.3s ease;
 }
 
+/* table styles */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -67,6 +72,7 @@ table th {
   background-color: #f4f4f4;
 }
 
+/* bar class effect */
 .bar {
   transition: all 0.3s ease;
 }
@@ -93,7 +99,7 @@ table th {
   font-weight: bold;
   text-shadow: 1px 1px 2px white;
 }
-
+/* autor card styles */
 .author-card {
   display: flex;
   align-items: center;
